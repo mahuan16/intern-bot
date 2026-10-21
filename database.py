@@ -31,7 +31,7 @@ class Application(Base):
     id = Column(Integer, primary_key=True)
     user_id = Column(String)
     posting_id = Column(Integer, ForeignKey("postings.id"))
-    status = Column(String)
+    status = Column(String) # not started, in progress, waiting, responded (if responded, hidden row)
     last_reminder = Column(DateTime)
 
 
