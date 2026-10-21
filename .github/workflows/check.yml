@@ -1,0 +1,32 @@
+name: Check internships
+
+on:
+  schedule:
+    # 12pm and 10pm Pacific. GitHub cron is UTC and ignores daylight saving,
+    # so we trigger at both the PDT and PST times; main.py skips the wrong ones.
+    - cron: "0 19,20 * * *"   # 12pm PDT / 12pm PST
+    - cron: "0 5,6 * * *"     # 10pm PDT / 10pm PST
+  workflow_dispatch:           # lets you run it manually from the Actions tab
+
+permissions:
+  contents: write              # needed to commit seen.json back to the repo
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+      - run: python main.py
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          FORCE_RUN: ${{ github.event_name == 'workflow_dispatch' && '1' || '0' }}
+      - name: Save seen.json
+        run: |
+          git config user.name "internship-bot"
+          git config user.email "bot@users.noreply.github.com"
+          git add seen.json
+          git diff --staged --quiet || (git commit -m "Update seen listings" && git push)
