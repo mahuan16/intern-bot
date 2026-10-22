@@ -17,7 +17,7 @@ WEBHOOK_URL = os.environ.get("DISCORD_WEBHOOK_URL")
 
 # --- Schedule settings ------------------------------------------------------
 TIMEZONE = "America/Los_Angeles"
-RUN_HOURS = {0, 8, 12, 22}  # 0 is temporary, for testing # RUN_HOURS = {8, 12, 22}  # 8am, 12pm and 10pm local time
+RUN_HOURS = {8, 12, 22}  # 0 is temporary, for testing # RUN_HOURS = {8, 12, 22}  # 8am, 12pm and 10pm local time
 # ----------------------------------------------------------------------------
 
 # Discord allows max 10 embeds per message

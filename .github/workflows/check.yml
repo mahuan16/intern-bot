@@ -2,7 +2,6 @@ name: Check internships
 
 on:
   schedule:
-    - cron: "7 7 * * *"       # TEMP TEST: 12:07am PDT
     - cron: "0 15,16 * * *"   # 8am
     - cron: "0 19,20 * * *"   # 12pm
     - cron: "0 5,6 * * *"     # 10pm
